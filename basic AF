@@ -1,0 +1,204 @@
+
+def Menu():
+    print("1 Basic switch config")
+    print("2 Assign ports to Vlan")
+    print("3 for basic config + porsts and vlans")
+    print("Type Exit to close")
+    choice = input()
+    if choice == "1":
+        return basic_conf()
+    if choice == "2":
+        return Assign_Vlan_ports()
+    if choice == "3":
+        return conf_vlan()
+    else:
+       return goodbye()
+
+
+
+def basic_conf():
+    login_pass = input("enter login password : ")
+    en_pass = input("enter enable password : ")
+    tel_pass = input("enter telnet password : ")
+    vty_range = input("enter vty range (example 0 15) : ")
+    host_name = input("enter hostname : ")
+    print("##########   COPY AND PASTE CODE BELOW   ###########")
+    print ("en")
+    print("conf t")
+    print ("no ip domain-lookup")
+    print ("service password-encryption")
+    print ("enable secret "+en_pass)
+    print ("banner motd #")
+    print ("Unauthorized access is strictly prohibited.#")
+    print ("line con 0")
+    print ("password "+login_pass)
+    print ("login")
+    print ("logging synchronous")
+    print ("line vty "+vty_range)
+    print ("password "+tel_pass )
+    print ("logging synchronous")
+    print ("login")
+    print ("exit")
+    print("exit")
+    print ("conf t")
+    print ("hostname "+host_name)
+    print("exit")
+    print("write")
+    print("##########   COPY AND PASTE CODE ABOVE   ###########")
+    input("press enter to return to menu")
+    (Menu())
+
+
+def Assign_Vlan_ports():
+    ports = input("Enter port or range of ports EXAMPLE (f0/1,f0/5) or (f0/1-f0/10) :")
+    vlan = input("select vlan to assign ports to (number only) Example (20) :")
+    name = input("Name of Vlan :")
+
+    trunk_access = input("trunk or access port? :")
+
+
+    if trunk_access == "access":
+        ass =("switchport mode access")
+
+    else:
+        t_d = input("trunk or dynamic? :")
+        if t_d == "dynamic":
+            ass = ("switchport mode dynamic desirable")
+
+        if t_d == "trunk":
+            ass = ("switchport mode trunk")
+
+    vlan_ip = input("Do you want to setup an ip for this Vlan y/n? :")
+    vlan = ("vlan " + vlan)
+
+
+    if vlan_ip == "y":
+        ip_add = input("Enter ip Address and SubNet Mask :")
+        ip = ("interface "+vlan+"\nip address "+ip_add)
+    else:
+            ip_add = ("conf t\nexit")
+            ip = (ip_add)
+
+
+
+
+    print("##########   COPY AND PASTE CODE BELOW   ###########")
+    print ("conf t")
+    print ("interface range "+ports)
+    print ("switchport access "+vlan)
+    print (ass)
+    print("no shutdown")
+    print("exit")
+    print(vlan)
+    print("name "+name)
+    print("exit")
+    print("exit")
+    print("conf t")
+    print(ip)
+    print("exit\nexit")
+    print("write")
+    print("##########   COPY AND PASTE CODE ABOVE   ###########")
+    input("press enter to return to menu")
+    (Menu())
+
+
+def conf_vlan():
+    login_pass = input("enter login password : ")
+    en_pass = input("enter enable password : ")
+    tel_pass = input("enter telnet password : ")
+    vty_range = input("enter vty range (example 0 15) : ")
+    host_name = input("enter hostname : ")
+    ports = input("Enter port or range of ports EXAMPLE (f0/1,f0/5) or (f0/1-f0/10) :")
+    vlan = input("select vlan to assign ports to? number only EXAMPLE (20) :")
+    name = input("Name of Vlan :")
+    trunk_access = input("trunk or access port? :")
+
+
+
+
+    if trunk_access == "access":
+        ass =("switchport mode access")
+
+    else:
+        t_d = input("trunk or dynamic? :")
+        if t_d == "dynamic":
+            ass = ("switchport mode dynamic desirable")
+
+        if t_d == "trunk":
+            ass = ("switchport mode trunk")
+
+
+    vlan_ip = input("Do you want to setup an ip for this Vlan y/n? :")
+    vlan = ("vlan " + vlan)
+
+
+    if vlan_ip == "y":
+        ip_add = input("Enter ip Address and SubNet Mask :")
+        ip = ("interface "+vlan + "\nip address " + ip_add)
+    else:
+        ip_add = ("conf t\nexit")
+        ip = (ip_add)
+
+
+
+
+
+
+    print("##########   COPY AND PASTE CODE BELOW   ###########")
+    print ("en")
+    print("conf t")
+    print ("no ip domain-lookup")
+    print ("service password-encryption")
+    print ("enable secret "+en_pass)
+    print ("banner motd #")
+    print ("Unauthorized access is strictly prohibited.#")
+    print ("line con 0")
+    print ("password "+login_pass)
+    print ("login")
+    print ("logging synchronous")
+    print ("line vty "+vty_range)
+    print ("password "+tel_pass )
+    print ("logging synchronous")
+    print ("login")
+    print ("exit")
+    print("exit")
+    print ("conf t")
+    print ("hostname "+host_name)
+    print("exit")
+    print ("conf t")
+    print ("interface range "+ports)
+    print ("switchport access "+vlan)
+    print (ass)
+    print("no shutdown")
+    print("exit")
+    print(vlan)
+    print("name "+name)
+    print("exit")
+    print("exit")
+    print("conf t")
+    print(ip)
+    print("exit\nexit")
+    print("write")
+    print("##########   COPY AND PASTE CODE ABOVE   ###########")
+    input("press enter to return to menu")
+    (Menu())
+
+
+
+
+
+
+def goodbye():
+    print ("goodbye")
+
+
+
+
+
+
+    
+    
+print (Menu())
+
+
+
